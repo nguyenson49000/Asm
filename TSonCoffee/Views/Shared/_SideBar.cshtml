@@ -1,0 +1,18 @@
+﻿@{
+	var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
+	var currentAction = ViewContext.RouteData.Values["action"]?.ToString();
+}
+@if (currentController == "Home" || (currentAction == "Index" && currentController == "Product") || currentController == "ProductType"){
+<div class="left-sidebar">
+	<h2>Loại sản phẩm</h2>
+	<div class="panel-group category-products" id="accordian">
+		<!--category-productsr-->
+		<vc:product-type></vc:product-type>
+	</div><!--/category-products-->
+
+
+
+
+
+</div>
+}

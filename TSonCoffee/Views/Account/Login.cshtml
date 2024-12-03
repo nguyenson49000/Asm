@@ -1,0 +1,41 @@
+﻿﻿@{
+	ViewBag.Title = "Login";
+	var mess = TempData["Status"];
+	var a = TempData["mess"];
+}
+@using (Html.BeginForm("Login", "Account", FormMethod.Post)){
+	<section id="form">
+		<!--form-->
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-sm-7 ">
+					<img src="~/Image/Acount/Login.jpg" alt="Alternate Text" />
+				</div>
+				<div class="col-sm-5">
+					<div class="signup-form">
+						<div class="login-form">
+							<!--login form-->
+							<h2>Login to your account</h2>
+							<h5 class=" disabled">@mess</h5>
+							<form action="#">
+                                <div class="form-floating mb-3">
+                                    <label for="username">UserName</label>
+									<input type="text" class="form-control" id="username" name="username" placeholder="UserName" required>
+									
+								</div>
+                                <div class="form-floating mb-3">
+                                    <label for="Password">Password</label>
+									<input type="password" class="form-control" id="Password" placeholder="Password" name="pass" required>
+								</div>
+								<button type="submit" class="btn btn-default">Login</button>
+							</form>
+						</div><!--/login form-->
+					</div>
+				</div>
+			</div>
+	</section>
+
+	<!--/form-->
+}
+
+

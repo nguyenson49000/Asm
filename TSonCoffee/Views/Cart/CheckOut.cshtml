@@ -1,0 +1,132 @@
+﻿@model IEnumerable<TSonCoffee.Models.CartItemViewModel>
+@{
+	double thue = @Model.Sum(x => x.totalamount) / 100 * 10;
+	double shippingFee = 20000;
+	double tong = thue + @Model.Sum(x => x.totalamount) + shippingFee;
+}
+<section id="cart_items">
+	<div class="container">
+		<div class="breadcrumbs">
+			<ol class="breadcrumb">
+				<li><a href="#">Home</a></li>
+				<li class="active">Check out</li>
+			</ol>
+		</div><!--/breadcrums-->
+
+
+	@* 	<div class="shopper-informations">
+			<div class="row">
+				<div class="col-sm-5 clearfix">
+					<div class="bill-to">
+						<p>Bill To</p>
+						<div class="form-one">
+							<form>
+								<input type="text" placeholder="Tên người nhận">
+								<input type="text" placeholder="Số điện thoại">
+							</form>
+						</div>
+						<div class="form-two">
+							<form>
+								
+								<select asp-for="paymentMethodId" >
+									<option>Phương thức thanh toán</option>
+									<option value="1" >Tiền mặt</option>
+									<option value="2" >Chuyển khoản</option>
+								</select>
+							</form>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+		</div> *@
+		<div class="review-payment">
+			<h2>Review & Payment</h2>
+		</div>
+
+		<div class="table-responsive cart_info">
+			<table class="table table-condensed" style="margin:10px">
+				<thead>
+					<tr class="cart_menu">
+						<td class="image">Item</td>
+						<td class="description">Name</td>
+						<td class="price">Price</td>
+						<td class="quantity">Size</td>
+						<td class="total">Amount of ice</td>
+						<td class="">Amount of sweet</td>
+						<td class="">Topping</td>
+						<td class="quantity">Quantity</td>
+						<td class="">Total amount</td>
+					</tr>
+				</thead>
+				<tbody class="text-center">
+					@foreach (var item in Model)
+					{
+						<tr>
+							<td class="cart_product" style="margin-right:50px">
+								<a><img style="height:200px; width:200px" src="~/Image/@item.Img" alt=""></a>
+							</td>
+							<td>
+								<h4><a href="">@item.ProductName</a></h4>
+
+							</td>
+							<td class="cart_price">
+								<p>@item.price đ</p>
+							</td>
+							<td class="cart_price">
+								<p>@item.Size</p>
+							</td>
+							<td class="cart_price">
+								<p>@item.ice%</p>
+							</td>
+							<td class="cart_price">
+								<p>@item.sweet%</p>
+							</td>
+							<td class="cart_price">
+								<p>@item.topping</p>
+							</td>
+							<td class="cart_quantity" style="width:200px">
+								<div class="cart_quantity_button">
+									<a class="cart_quantity_up" href="javascript:void(0)"> + </a>
+									<input class="cart_quantity_input" type="text" name="quantity" value="@item.Quantity" autocomplete="off" size="2">
+									<a class="cart_quantity_down" href="javascript:void(0)"> - </a>
+								</div>
+							</td>
+							<td class="cart_total">
+								<p class="cart_total_price">@item.totalamount đ</p>
+							</td>
+							<td class="cart_delete">
+								<a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
+							</td>
+						</tr>
+					}
+
+				</tbody>
+			</table>
+		</div>
+		<div>
+			<div class="total_area">
+				<ul>
+					<li asp-for="TemporaryTotalAmount" >Tổng tiền sản phẩm <span>@Model.Sum(x => x.totalamount) đ</span></li>
+					<li>Thuế<span>@thue đ</span></li>
+					<li>Phí ship <span>@shippingFee đ</span></li>
+					<li>Tổng<span>@tong đ</span></li>
+				</ul>
+			</div>
+		</div>
+		<div class="payment-options" style="margin-top:10px; margin-left:40px" >
+			<div class="form-two">
+				<form method="post" action="/Cart/DatHang">
+					<select name="paymentMethodId">
+						<option value="">Phương thức thanh toán</option>
+						<option value="1">Tiền mặt</option>
+						<option value="2">Chuyển khoản</option>
+					</select>
+					<input type="text" name="recipientName" placeholder="Tên người nhận">
+					<input type="text" name="phoneNumber" placeholder="Số điện thoại">
+					<button type="submit">Đặt hàng</button>
+				</form>
+			</div>
+        </div>
+	</div>
+</section> <!--/#cart_items-->

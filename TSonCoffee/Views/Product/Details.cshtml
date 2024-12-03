@@ -1,0 +1,136 @@
+﻿@model TSonCoffee.Models.Product
+
+<div class="col-sm-3">
+	@Html.Partial("_SideBar")
+</div>
+<div class="col-sm-9 padding-right">
+	<div class="product-details">
+		<!--product-details-->
+		<div class="col-sm-7">
+            
+			<img src="~/Image/@Model.Img.UrlImg" alt="" style="height:500px;width:500px" />
+            <span>
+                <h2>@Model.Name</h2>
+                <h2 style="color:orangered">@Model.Price VNĐ</h2>
+            </span>
+		</div>
+		<div class="col-sm-5">
+			<div class="product-information">
+				<!--/product-information-->
+				<!-- Size buttons -->
+				<span>
+					<h2>Chọn size(bắt buộc):</h2>
+					<button type="button" class="btn  btn-default size-button" data-size="1" data-price="0 đ">Nhỏ + 0 VNĐ</button>
+					<button type="button" class="btn  btn-default size-button" data-size="2" data-price="6000 đ">Vừa + 6000 VNĐ</button>
+					<button type="button" class="btn  btn-default size-button" data-size="3" data-price="16000 đ">Lớn + 16000 VNĐ</button>
+				</span>
+
+				<!-- Sweet buttons -->
+				<span>
+					<h2>Độ ngọt:</h2>
+					<button type="button" class="btn  btn-default sweet-button" data-sweet="1">30% đường</button>
+					<button type="button" class="btn  btn-default sweet-button" data-sweet="2">50% đường</button>
+					<button type="button" class="btn  btn-default sweet-button" data-sweet="3">70% đường</button>
+					<button type="button" class="btn  btn-default sweet-button" data-sweet="4">100% đường</button>
+				</span>
+
+				<!-- Ice buttons -->
+				<span>
+					<h2>Đá:</h2>
+					<button type="button" class="btn btn-default ice-button" data-ice="1">30% đá</button>
+					<button type="button" class="btn  btn-default ice-button" data-ice="2">50% đá</button>
+					<button type="button" class="btn  btn-default ice-button" data-ice="3">70% đá</button>
+					<button type="button" class="btn  btn-default ice-button" data-ice="4">100% đá</button>
+				</span>
+
+				<!-- Topping buttons -->
+				<span>
+					<h2>Topping:</h2>
+					<button type="button" class="btn btn-default topping-button" data-topping="1" data-price="10000">Sốt Caramel + 10000 đ</button>
+					<button type="button" class="btn btn-default topping-button" data-topping="2" data-price="10000">Shot Espresso + 10000 đ</button>
+					<button type="button" class="btn btn-default topping-button" data-topping="3" data-price="10000">Trân Châu Trắng + 10000 đ</button>
+					<button type="button" class="btn btn-default topping-button" data-topping="4" data-price="10000">Đào Miếng + 10000 đ</button>
+					<button type="button" class="btn btn-default topping-button" data-topping="5" data-price="10000">Trái Vải + 10000 đ</button>
+				</span>
+				<form id="orderForm" action="/Cart/SaveOrder" method="post" >
+					<input type="hidden" name="size" id="selectedSize" />
+					<input type="hidden" name="sweet" id="selectedSweet" />
+					<input type="hidden" name="ice" id="selectedIce" />
+					<input type="hidden" name="topping" id="selectedTopping" />
+					<input type="hidden" name="productId" id="productId" value="@Model.Id" />
+					<div>
+						<label for="quantity">Số lượng:</label>
+						<input type="number" id="quantity" name="quantity" min="1" value="1" class="form-control" />
+					</div>
+                    <button type="submit" class="btn btn-primary">Thêm vào giỏ hàng</button>
+				</form>
+
+
+			</div><!--/product-information-->
+		</div>
+	</div><!--/product-details-->
+
+</div>
+
+<script>
+		document.addEventListener('DOMContentLoaded', function() {
+		// Khai báo các biến để lưu trạng thái chọn của các phần
+		let selectedSize = null;
+		let selectedSweet = null;
+		let selectedIce = null;
+		let selectedTopping = null;
+			// JavaScript code to capture the quantity if needed
+	document.getElementById('quantity').addEventListener('change', function() {
+		console.log('Số lượng đã chọn: ', this.value);
+	});
+
+	 let productId = '@Model.Id'; // Assuming 'Id' is the property in your model that holds the product ID
+	document.getElementById('productId').value = productId;
+
+		document.querySelectorAll('.size-button').forEach(function(button) {
+			button.addEventListener('click', function() {
+				document.querySelectorAll('.size-button').forEach(btn => btn.classList.remove('selected'));
+				button.classList.add('selected');
+				selectedSize = button.getAttribute('data-size');
+				document.getElementById('selectedSize').value = selectedSize;
+			});
+		});
+
+		document.querySelectorAll('.sweet-button').forEach(function(button) {
+			button.addEventListener('click', function() {
+				document.querySelectorAll('.sweet-button').forEach(btn => btn.classList.remove('selected'));
+				button.classList.add('selected');
+				selectedSweet = button.getAttribute('data-sweet');
+				document.getElementById('selectedSweet').value = selectedSweet;
+			});
+		});
+
+		document.querySelectorAll('.ice-button').forEach(function(button) {
+			button.addEventListener('click', function() {
+				document.querySelectorAll('.ice-button').forEach(btn => btn.classList.remove('selected'));
+				button.classList.add('selected');
+				selectedIce = button.getAttribute('data-ice');
+				document.getElementById('selectedIce').value = selectedIce;
+			});
+		});
+
+		document.querySelectorAll('.topping-button').forEach(function(button) {
+			button.addEventListener('click', function() {
+				document.querySelectorAll('.topping-button').forEach(btn => btn.classList.remove('selected'));
+				button.classList.add('selected');
+				selectedTopping = button.getAttribute('data-topping');
+				document.getElementById('selectedTopping').value = selectedTopping;
+			});
+		});
+	});
+
+</script>
+
+
+<style>
+	.selected {
+		background-color: #007bff;
+		color: white;
+	}
+
+</style>
